@@ -19,18 +19,11 @@ public:
             int width = num % 10; 
             long long d = num / 10; 
             string s = to_string(d); 
-            string x = "", y = ""; 
-            int j = 0; 
-            while (j < s.length()) { 
-                if (width > 0) { 
-                    x += s[j]; 
-                    width--; 
-                } else y += s[j]; 
-                    j++; 
-            } 
+            string x = s.substr(0, width);
+            string y = s.substr(width);
             long long base = stoll(x); 
-            long long exponent = stoll(y); 
-            sum = (sum + power(base, exponent)) % MOD; 
+            long long exp = stoll(y); 
+            sum = (sum + power(base, exp)) % MOD; 
         } 
         return sum;
     }
