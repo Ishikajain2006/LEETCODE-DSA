@@ -1,25 +1,24 @@
 class Solution {
 public:
-    const int MOD = 1e9 + 7;
-    int rev(int num){
-        string s = to_string(num);
-        reverse(s.begin() , s.end());
-        int revele = atoi(s.c_str());
-        return revele ;
+    int MOD = 1e9 + 7;
+    int reverse(int n ){
+        int r = 0 ;
+        while(n>0){
+            r*=10 ;
+            r+=n%10 ;
+            n/=10 ;
+        }
+        return r ;
     }
     int countNicePairs(vector<int>& nums) {
-        vector<int> diff;
-        for (int x : nums)  diff.push_back(x - rev(x));
-        sort(diff.begin(), diff.end());
-        long long ans = 0 , cnt = 1 ;
-        for (int i = 1; i < diff.size(); i++) {
-            if (diff[i] == diff[i - 1]) cnt++;
-            else {
-                ans = (ans + cnt * (cnt - 1) / 2) % MOD;
-                cnt = 1;
-            }
+        int count = 0 ;
+        // for(int i=0 ; i<nums.size() ; i++) nums[i] -= reverse(nums[i]);
+        unordered_map<int , int>freq ;
+        for (int num : nums) {
+            int diff = num - reverse(num);
+            count = (count + freq[diff]) % MOD;
+            freq[diff]++;
         }
-        ans = (ans + cnt * (cnt - 1) / 2) % MOD;
-        return ans;
+        return count ;
     }
 };
