@@ -11,8 +11,15 @@ public:
     int deleteAndEarn(vector<int>& nums) {
         int n = *max_element(nums.begin() , nums.end());
         vector<int>freq(n+1 , 0);
-        vector<int>dp(freq.size()+1 , -1);
         for(int x : nums) freq[x]+=x ;
-        return f(freq.size()-1 , freq , dp);
+        vector<int>dp(freq.size()+1 , -1);
+        dp[0]=0 ;
+        for(int i=1 ; i<freq.size() ; i++){
+            int pick = freq[i];
+            if(i-2>=0) pick+= dp[i-2];
+            int npick = dp[i-1];
+            dp[i] = max(pick , npick);
+        }
+        return dp[freq.size()-1];
     }
 };
